@@ -75,14 +75,14 @@ export function setup(opts: minimist.ParsedArgs) {
 					await app.workbench.configurePythonDialog.next();
 					await app.workbench.configurePythonDialog.waitForPageTwoLoaded();
 					await app.workbench.configurePythonDialog.install();
-					// Close notification toasts, since they can interfere with the Manage Packages Dialog test
-					await app.workbench.notificationToast.closeNotificationToasts();
 					pythonConfigured = true;
 				}
 			}
 
 			async function openAndRunNotebook(app: Application, filename: string): Promise<void> {
 				await app.workbench.sqlNotebook.openFile(filename);
+				// Close notification toasts, since they can interfere with the Manage Packages Dialog test
+				await app.workbench.notificationToast.closeNotificationToasts();
 				await configurePython(app);
 				await app.workbench.sqlNotebook.notebookToolbar.waitForKernel('Python 3');
 
@@ -115,7 +115,7 @@ export function setup(opts: minimist.ParsedArgs) {
 				await app.workbench.sqlNotebook.waitForActiveCellResults();
 			});
 
-			it('can add and remove new package from the Manage Packages wizard @UNSTABLE@', async function () {
+			it('can add and remove new package from the Manage Packages wizard', async function () {
 				// Use arrow package so that it's at the top of the packages list when uninstalling later
 				const testPackageName = 'arrow';
 
@@ -274,8 +274,9 @@ export function setup(opts: minimist.ParsedArgs) {
 			});
 		});
 
-		describe('Cell Toolbar Actions @UNSTABLE@', function () {
+		describe('Cell Toolbar Actions', function () {
 			async function verifyCellToolbarBehavior(app: Application, toolbarAction: () => Promise<void>, selector: string, checkIfGone: boolean = false): Promise<void> {
+				await app.workbench.notificationToast.closeNotificationToasts();
 				// Run the test for each of the default text editor modes
 				for (let editMode of ['Markdown', 'Split View']) {
 					await app.workbench.settingsEditor.addUserSetting('notebook.defaultTextEditMode', `"${editMode}"`);
@@ -299,8 +300,10 @@ export function setup(opts: minimist.ParsedArgs) {
 			}
 
 			async function verifyToolbarKeyboardShortcut(app: Application, keyboardShortcut: string, selector: string) {
+				await app.workbench.notificationToast.closeNotificationToasts();
 				// Run the test for each of the default text editor modes
 				for (let editMode of ['Markdown', 'Split View']) {
+					await app.code.dispatchKeybinding('escape');
 					await app.workbench.settingsEditor.addUserSetting('notebook.defaultTextEditMode', `"${editMode}"`);
 					await app.workbench.quickaccess.runCommand('workbench.action.closeActiveEditor');
 					await app.workbench.sqlNotebook.newUntitledNotebook();
