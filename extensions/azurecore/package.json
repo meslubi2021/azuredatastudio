@@ -510,14 +510,14 @@
     "@azure/msal-node": "1.16.0",
     "@azure/ms-rest-js": "^2.2.0",
     "@azure/storage-blob": "^12.13.0",
-    "axios": "^1.5.0",
+    "axios": "^1.7.4",
     "lockfile": "1.0.4",
     "@microsoft/ads-extension-telemetry": "^3.0.1",
     "node-fetch": "^2.6.7",
     "qs": "^6.9.1",
     "universalify": "^0.1.2",
     "vscode-nls": "^4.0.0",
-    "ws": "^7.4.6"
+    "ws": "^7.5.10"
   },
   "devDependencies": {
     "@microsoft/vscodetestcover": "^1.2.2",
