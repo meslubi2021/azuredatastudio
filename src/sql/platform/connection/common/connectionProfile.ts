@@ -254,8 +254,12 @@ export class ConnectionProfile extends ProviderConnectionInfo implements interfa
 	public override getOptionsKey(getOriginalOptions?: boolean): string {
 		let id = super.getOptionsKey(getOriginalOptions);
 		let databaseDisplayName: string = this.options['databaseDisplayName'];
+		let port: string = this.options['port'];
 		if (databaseDisplayName) {
 			id += ProviderConnectionInfo.idSeparator + 'databaseDisplayName' + ProviderConnectionInfo.nameValueSeparator + databaseDisplayName;
+		}
+		if (port) {
+			id += ProviderConnectionInfo.idSeparator + 'port' + ProviderConnectionInfo.nameValueSeparator + port;
 		}
 
 		let groupProp = 'group'
